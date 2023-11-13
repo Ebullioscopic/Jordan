@@ -1,0 +1,53 @@
+[
+    {
+        "name":"play_games",
+        "description": "Play Games to help relax the mind",
+        "parameters":{
+            "type":"object",
+            "properties": {
+                "game":{
+                    "type":"string",
+                    "description":"Name of the game, e.g. Chess, Ludo, Solitaire"
+                }
+            }
+        }
+    },
+    {
+        "name":"generate_music",
+        "description": "Generate Music to help relax the mind",
+        "parameters":{
+            "type":"object",
+            "properties":{
+                "vocals":{
+                    "type":"string",
+                    "description":"Name of the musician, e.g. Ed Sheeran, Shankar Mahadevan" 
+                },
+                "instruments":{
+                    "type":"string",
+                    "description":"Name of the instrument, e.g. Guitar, Violin"
+                },
+                "genre":{
+                    "type":"string",
+                    "description":"Genre of the music, e.g. Pop, Rock, Punk"
+                },
+                "title":{
+                    "type":"string",
+                    "description":"Title of the music e.g. Shape of You, Breathless"
+                }
+            }          
+        }
+    },
+    {
+        "name":"generate_image",
+        "description":"Generate Artistic images to help relax the mind",
+        "parameters":{
+            "type":"object",
+            "properties":{
+                "details":{
+                    "type":"string",
+                    "description":"All the details and description about the image"
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,348 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import Clock kivy.clock.Clock
+<Manager>:
+    id: manager
+    name: "manager"
+    LoginScreen:
+    RegisterScreen:
+    MainScreen:
+
+
+<LoginScreen>:
+    id: login
+    name: "login"
+    #imid: imid
+    #on_pre_enter: login_mobile.focus = True
+    #on_enter: root.prepare(login_mobile,login_password)
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            #opacity: 0.5
+            #texture: app.wallpaper.texture
+            #source: "./resources/images/wallpaper.jpeg"
+    MDCard:
+        orientation: "vertical"
+        size_hint: None, None
+        size: "300dp","400dp"
+        pos_hint: {"center_x":0.5, "center_y":0.5}  
+        style: "elevated"
+        padding: "20dp"
+        shadow_softness: 2
+        shadow_offset: (0,1)
+        line_color: 0.2,0.2,0.2,0.8
+        #md_bg_color: "#B0FC38"
+        #FloatLayout:
+        GridLayout:
+            cols: 3
+            #anchor_x: "center"
+            #anchor_y: "center"   
+            MDLabel:         
+            MDLabel:
+                blur_radius: 20
+                mipmap: True
+                canvas:
+                    Color:
+                        rgb: 1, 1, 1
+                    Ellipse:
+                        #pos: 280, 200
+                        pos: self.x,self.y
+                        size: 100 , 100 
+                        source: './resources/images/logo.jpeg'
+                        #texture: app.logo.texture
+                        angle_start: 0
+                        angle_end: 360
+                        #mipmap: True
+            MDLabel:
+        # Image:
+        #     halign: "center"
+        #     source: "CareerShield.png" 
+        #     #allow_stretch: False
+        #     #keep_ratio: True
+        #     mipmap: True
+        MDTextField:
+            id: login_mobile
+            hint_text: "Mobile or E-mail"
+            icon_left: "account"
+            icon_left_color: app.theme_cls.primary_color
+            write_tab: False
+            multiline: False
+            on_text_validate: login_password.focus = True
+        MDPasswordTextField:
+            id: login_password
+            hint_text: "Password"
+            icon_right: "lock"
+            icon_right_color: app.theme_cls.primary_color
+            password: True
+            write_tab: False
+            multiline: False
+            #text: root.text
+            #on_text_validate: app.change_to_main_screen(login_mobile.text,self.text)
+        # MDGridLayout:
+        #     cols: 3
+        #     spacing: "10dp"
+        #     align: "center"
+        #     MDLabel:
+        #     MDRaisedButton:
+        #         text: "Login"
+        #         markup: True
+        #         text_color: "white"
+        #         size_hint_x: None
+        #         increment_width: "120dp"
+        #         #on_press: app.show_success_popup()
+        #         on_release: app.change_to_main_screen(login_mobile.text,login_password.text)
+        #     MDLabel:
+        #     MDLabel:
+        #     MDLabel:
+        #         markup: True
+        #         font_style: "Caption"
+        #         text: "Don't have an account? [ref=ref1]Sign Up[/ref]"
+        #         on_ref_press: app.open_signup_screen()
+        #     MDLabel:
+        # MDTextField:
+        #     id: login_mobile
+        #     hint_text: "Mobile"
+        #     icon_left: "phone"
+        #     icon_left_color: app.theme_cls.primary_color
+        #     write_tab: False
+        #     multiline: False
+        #     on_text_validate: login_password.focus = True
+        # MDPasswordTextField:
+        #     id: login_password
+        #     hint_text: "Password"
+        #     icon_right: "lock"
+        #     icon_right_color: app.theme_cls.primary_color
+        #     password: True
+        #     write_tab: False
+        #     multiline: False
+            #text: root.text
+            #on_text_validate: app.change_to_main_screen(login_mobile.text,self.text)
+        MDGridLayout:
+            cols: 3
+            spacing: "10dp"
+            align: "center"
+            MDRaisedButton:
+                text: "Sign Up"
+                markup: True
+                text_color: "white"
+                size_hint_x: None
+                increment_width: "120dp"
+                on_release: app.change_screen("register")
+            MDLabel:
+            MDRaisedButton:
+                text: "Login"
+                markup: True
+                text_color: "white"
+                size_hint_x: None
+                increment_width: "120dp"
+                on_press: app.process_data()
+                on_release: app.change_to_main_screen(login_mobile.text,login_password.text)
+
+<RegisterScreen>:
+
+<MainScreen>:
+    name: "main"
+    on_enter: 
+        #nav_drawer.set_state("close")
+        app.set_response_id(chat_list) 
+        rail.dismiss()
+        app.set_camera_id(camera)   
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            #source: './resources/images/wallpaper.jpeg'
+    AKNavigationrail:
+        id: rail
+    
+        AKNavigationrailCustomItem:
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(5)
+
+            MDIconButton:
+                icon: "menu"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                on_release:
+                    if rail.get_state() == "open": rail.dismiss(); self.icon="menu"
+                    else: rail.open(); self.icon ="arrow-left"
+
+        AKNavigationrailItem:
+            text: "Jordan"
+            icon: "robot-happy-outline"
+            on_release: screenmain.current= "ai"
+
+        # AKNavigationrailItem:
+        #     text: "Deposit"
+        #     icon: "wallet-plus-outline"
+            #on_release: scr_mng.current= "deposit"
+
+        AKNavigationrailItem:
+            text: "Profile"
+            icon: "account-circle-outline"
+            #on_release: scr_mng.current= "profile"
+
+        AKNavigationrailCustomItem:
+
+        AKNavigationrailContent:
+            ScreenManager:
+                name: "screenmain"
+                id: screenmain
+                transition: NoTransition()
+                MDScreen: #ChatBot
+                    #bot_name: bot_name
+                    # text_input: text_input
+                    on_enter: app.set_response_id(chat_list)
+                    chat_list: chat_list
+                    camera: camera
+                    name: "ai"
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        # MDTopAppBar:
+                        #     title: "Jordan"
+                        #     elevation: 4
+                        #     pos_hint: {"top": 1}
+                        #     #md_bg_color: "#e7e4c0"
+                        #     #specific_text_color: "#4a4939"
+                        #     left_action_items:
+                        #         [['menu', lambda x: nav_drawer.set_state("open"),"Menu"]]
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            #cols: 2
+                            MDBoxLayout:
+                                orientation: "vertical"
+                                Label:
+                                    Image:
+                                        source: "./resources/images/logo.jpeg"
+                                FaceCam:
+                                    id: camera
+                                    name: "camera"
+                            #MDFloatLayout:
+                            # MDFloatLayout:
+                            #     md_bg_color: 245/255, 245/255, 245/255, 1
+                            #     size_hint_y: .11
+                            #     pos_hint: {"center_y": .95}
+                            #     MDLabel:
+                            #         id: bot_name
+                            #         text: ""
+                            #         pos_hint: {"center_y": .5}
+                            #         halign: "center"
+                            #         font_name: "BPoppins"
+                            #         font_size: "25sp"
+                            #         theme_text_color: "Custom"
+                            #         text_color: 245/255, 245/255, 245/255, 1
+                            #MDFloatLayout:
+                                #md_bg_color: 245/255, 245/255, 245/255, 1
+                                # md_bg_color: 1, 1, 1, 1 
+
+                            #    size_hint_y: .11
+                            #    pos_hint: {"center_y": .95}
+                                # MDLabel:
+                                #     id: bot_name
+                                #     text: "hello"
+                                #     pos_hint: {"center_y": 1}
+                                #     halign: "center"
+                                #     font_name: "Poppins-Bold"
+                                #     font_size: "15sp"
+                                #     theme_text_color: "Custom"
+                                #     # text_color: 245/255, 245/255, 245/255, 1   
+                                #     text_color: 1, 1, 1, 1 
+                            MDBoxLayout:
+                                id: someid
+                                #cols: 1
+                                orientation: "vertical"
+                                # MDTopAppBar:
+                                #     title: "Jordan"
+                                #     elevation: 4
+                                #     pos_hint: {"top": 1}
+                                #     #md_bg_color: "#e7e4c0"
+                                #     #specific_text_color: "#4a4939"
+                                #     left_action_items:
+                                #         [['menu', lambda x: nav_drawer.set_state("open"),"Menu"]]
+                                # MDLabel:
+                                #     #height: self.minimum_height
+                                #     text: "Chat"
+                                #     halign: "center"
+                                #     height: "10dp"
+                                ScrollView:
+                                    size_hint_y: .77
+                                    #pos_hint: {"x": 0, "y": .116}
+                                    do_scroll_x: False
+                                    do_scroll_y: True
+                                    BoxLayout:
+                                        id: chat_list
+                                        orientation: 'vertical'
+                                        size: (someid.width, someid.height)
+                                        height: self.minimum_height
+                                        size_hint: None, None
+                                        #pos_hint: {'top': 10}
+                                        cols: 1
+                                        spacing: 5
+                            # MDBottomAppBar:
+
+                            #     MDTopAppBar:
+                            #         title: ""
+                            #         icon: "microphone"
+                            #         on_action_button: app.listen(chat_list)
+                            #         type: "bottom"
+                            #         #left_action_items: [["menu", lambda x: x]]
+                            #         right_action_items: [["keyboard",lambda x: app.open_text_field(chat_list)]]
+                            #         mode: "center"
+                                MDBoxLayout:
+                                    orientation: "horizontal"
+                                    padding: 10
+                                    height: self.minimum_height
+                                    size_hint_y: None
+                                    #pos_hint: None, None
+                                    #pos: 100, 0
+                                    size: self.minimum_height, self.minimum_width
+                        #            MDTextField:
+                        #                 hint_text: 'Type a message'
+                        #                 icon_left: 'emoticon-outline'
+                        #                 normal_color: 1, 1, 1, 1
+                        #                 color_active: 1, 1, 1, 1
+                        #                 icon_right: 'paperclip'
+                        #                 size_hint: (0.59, 0.08)
+                        #                 #pos: root.x + self.height/1.5, root.y + self.height//5
+                        #                 on_text_validate: 
+                        #                     app.ai_query = self.text
+                        #                     self.text = ""
+                        #                     app.camera = camera
+                        # #Clock.schedule_once(lambda x: self.parent.parent.parent.parent.dismiss())
+                        #                     Clock.schedule_once(lambda x: app.get_response_without_objects())
+                                    MDBoxLayout:
+                                        orientation: "horizontal"
+                                        #cols: 2
+                                        height: self.minimum_height
+                                        MDTextField:
+                                            height: self.minimum_height
+                                            id: text_field
+                                            password: False
+                                            icon_left: "format-text"
+                                            write_tab: False
+                                            line_color_normal: app.theme_cls.primary_color
+                                            #on_text_validate: root.on_text_validate
+                                            on_text_validate: 
+                                                app.ai_query = self.text
+                                                self.text = ""
+                                                app.camera = camera
+                                                Clock.schedule_once(lambda x: app.get_response_without_objects())
+                                        # MDIconButton:
+                                        #     icon: "paperclip"
+                                        #     pos_hint: {"center_y": .5}
+                                        #     pos: text_field.width - self.width + dp(8), 0
+                                        #     theme_text_color: "Hint"
+                                    MDFloatingActionButton:
+                                        #md_bg_color: (0.145, 0.827, 0.4, 1)
+                                        text_color: (1, 1, 1, 1)
+                                        icon: 'microphone'
+                                        size: 45, 45
+                                        #pos: root.width - 1.25*self.width, 0.2*self.width
+                                        size: 47, 47
+                                        on_press: app.listen(chat_list)
+
